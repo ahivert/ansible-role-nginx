@@ -35,7 +35,14 @@ http {
     keepalive_timeout  {{ nginx_keepalive_timeout }};
     keepalive_requests {{ nginx_keepalive_requests }};
 
-    #gzip  on;
+{% if nginx_gzip %}
+    gzip            on;
+    gzip_comp_level {{ nginx_gzip_comp_level }};
+    gzip_disable    {{ nginx_gzip_disable }};
+    gzip_min_length {{ nginx_gzip_min_length }};
+    gzip_types      {{ nginx_gzip_types }};
+    gzip_proxied    {{ nginx_gzip_proxied }};
+{% endif %}
 
 {% if nginx_proxy_cache_path %}
     proxy_cache_path {{ nginx_proxy_cache_path }};
