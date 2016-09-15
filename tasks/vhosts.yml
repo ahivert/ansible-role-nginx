@@ -10,8 +10,9 @@
 - name: Add managed vhost config file (if any vhosts are configured).
   template:
     src: vhosts.j2
-    dest: "{{ nginx_vhost_path }}/{{ nginx_vhosts_filename }}"
+    dest: "{{ nginx_vhost_path }}/{{ item.key }}.conf"
     mode: 0644
+  with_dict: "{{ nginx_vhosts }}"
   when: nginx_vhosts|length > 0
   notify:
     - reload nginx
